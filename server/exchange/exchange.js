@@ -1,5 +1,7 @@
 const axios = require('axios');
 
+const app_id = "8f9651cea59742f696ef1be124c98f8a";
+
 const getLatestRate = async(currency) => {
     try{
         const res = await axios.get(`http://api.fixer.io/latest?base=${currency}`);
@@ -25,15 +27,25 @@ const getExchangeRate = async (from, to) => {
 
 const getHistoricalRate = async (date) => {
     try{
-        const res = await axios.get(`https://api.fixer.io/${date}`);
+        const res = await axios.get(`http://api.fixer.io/${date}`);
         return res.data.rates;
     }catch(e){
         throw new Error(`Unable to get exchange rate in ${date}`);
     }
 }
 
+const getCurrencyName = async (currency) => {
+    try{
+        const res = await axios.get(`https://openexchangerates.org/api/currencies.json?app_id=${app_id}`);
+        return res.data[currency];
+    }catch (e){
+        throw new Error(`Could not find name of ${currency}`);
+    }
+}
+
 module.exports = {
     getLatestRate,
     getExchangeRate,
-    getHistoricalRate
+    getHistoricalRate,
+    getCurrencyName
 }

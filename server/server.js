@@ -44,7 +44,15 @@ app.post('/getHistoricalRate', (req, res) => {
     exchange.getHistoricalRate(date).then((rates) => {
         res.send(rates);
     });
-})
+});
+
+app.post('/getCurrencyName', (req, res) => {
+    var currency = req.body.currency;
+
+    exchange.getCurrencyName(currency).then((name) => {
+        res.send({name});
+    });
+});
 
 app.listen(port, () => {
     console.log(`Server started at : ${port}`);
