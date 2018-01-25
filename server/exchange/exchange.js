@@ -23,7 +23,17 @@ const getExchangeRate = async (from, to) => {
     }
 }
 
+const getHistoricalRate = async (date) => {
+    try{
+        const res = await axios.get(`https://api.fixer.io/${date}`);
+        return res.data.rates;
+    }catch(e){
+        throw new Error(`Unable to get exchange rate in ${date}`);
+    }
+}
+
 module.exports = {
     getLatestRate,
-    getExchangeRate
+    getExchangeRate,
+    getHistoricalRate
 }
